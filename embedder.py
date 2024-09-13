@@ -32,9 +32,9 @@ class embedder:
 
     def label_encoding(self):
         label_encoder = LabelEncoder()
-        celltype = self.adata.obs[cell_type_label]
+        celltype = self.adata.obs[self.args.cell_type_label]
         celltype = label_encoder.fit_transform(celltype)
-        self.adata.obs[cell_type_label] = celltype
+        self.adata.obs[self.args.cell_type_label] = celltype
 
     def preprocess(self, filter, cell_min=1, gene_min=1, hvg=True, n_hvg=2000, size_factors=True, logtrans_input=True):
 

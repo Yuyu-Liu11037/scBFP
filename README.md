@@ -8,7 +8,7 @@
 The official source code for [**Single-cell RNA-seq data imputation using Bi-level Feature Propagation**](https://academic.oup.com/bib/article/25/3/bbae209/7665119), accepted at Briefings in Bioinformatics (Volume 25, May 2024).
 
 ## Requirements
-- Python version : 3.9.16
+- Python version : 3.11
 - Pytorch version : 1.10.0
 - scanpy : 1.9.3
 
