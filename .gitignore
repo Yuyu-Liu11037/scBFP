@@ -1,5 +1,4 @@
-**/*data*/
-**/*wandb*/
+**/*dataset*/
 **/*pycache*/
 .DS_Store
 .ipynb_checkpoints
