@@ -7,19 +7,17 @@
 
 The official source code for [**Single-cell RNA-seq data imputation using Bi-level Feature Propagation**](https://academic.oup.com/bib/article/25/3/bbae209/7665119), accepted at Briefings in Bioinformatics (Volume 25, May 2024).
 
-## Requirements
-- Python version : 3.11
-- Pytorch version : 1.10.0
-- scanpy : 1.9.3
+## Environment
+```
+conda env create -f environment.yml
+```
 
 ## Download data
-
-Create the directory to save dataset.
 ```
 mkdir dataset
+pip install gdown
+gdown https://drive.google.com/uc?id=1raqlykXvm5wHjam1Up0SHYT-7gq7coz4
 ```
-
-You can download preprocessed data [here](https://www.dropbox.com/sh/eaujyhthxjs0d5g/AADzvVv-h2yYWaoOfs1sybKea?dl=0)
 
 ## Hyperparameters
 
