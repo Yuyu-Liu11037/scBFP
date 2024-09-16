@@ -44,6 +44,6 @@ usage example :`--iter 40`
 Using above hyper-parmeters, you can run our model with following codes  
 
 ```
-python main.py --name baron_mouse --gene_k 10 --cell_k 10 --gene_iter 10 --cell_iter 40
+python main.py --name citeseq_preprocessed_missing --gene_k 20 --cell_k 20 --gene_iter 100 --cell_iter 100
 ```
 
