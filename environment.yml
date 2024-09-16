@@ -118,10 +118,12 @@ dependencies:
       - fonttools==4.53.1
       - get-annotations==0.1.2
       - h5py==3.11.0
+      - igraph==0.11.6
       - importlib-metadata==8.5.0
       - importlib-resources==6.4.5
       - joblib==1.4.2
       - kiwisolver==1.4.7
+      - leidenalg==0.10.2
       - llvmlite==0.41.1
       - matplotlib==3.7.5
       - munkres==1.1.4
@@ -141,6 +143,7 @@ dependencies:
       - six==1.16.0
       - statsmodels==0.14.1
       - stdlib-list==0.10.0
+      - texttable==1.7.0
       - threadpoolctl==3.5.0
       - torch-scatter==2.1.2+pt24cu121
       - torch-sparse==0.6.18+pt24cu121
