@@ -32,19 +32,19 @@ class embedder:
         print(self.adata)
 
 
-    def label_encoding(self):
-        label_encoder = LabelEncoder()
-        celltype = self.adata.obs[self.args.cell_type_label]
-        celltype = label_encoder.fit_transform(celltype)
-        self.adata.obs[self.args.cell_type_label] = celltype
-
-
-    def evaluate_citeseq(self):
-        SITE1_CELL = 16311
-        SITE2_CELL = 25171
-        SITE3_CELL = 32029
-        SITE4_CELL = 16750
-        GEX = 2000
+    def evaluate(self):
+        if self.args.name == "citeseq":
+            SITE1_CELL = 16311
+            SITE2_CELL = 25171
+            SITE3_CELL = 32029
+            SITE4_CELL = 16750
+            GEX = 2000
+        elif self.args.name == "multiome":
+            SITE1_CELL = 17243
+            SITE2_CELL = 15226
+            SITE3_CELL = 14556
+            SITE4_CELL = 22224
+            GEX = 4000 # TODO: wrong code
 
         adata_imputed = self.adata.copy()
         adata_imputed.X = self.adata.obsm['imputation']
@@ -63,7 +63,8 @@ class embedder:
         sc.pp.neighbors(adata_imputed, use_rep="X_pca")
         true_labels = self.adata.obs[self.args.cell_type_label].values
 
-        sc.tl.leiden(adata_imputed, resolution=0.2, n_iterations=2)
+        resolution = 0.2 if self.args.name == "citeseq" else 0.65
+        sc.tl.leiden(adata_imputed, resolution=resolution, n_iterations=2)
         predicted_labels = adata_imputed.obs["leiden"]
     
         ari = adjusted_rand_score(true_labels, predicted_labels)
@@ -77,9 +78,9 @@ class embedder:
         sc.tl.umap(adata_imputed)
         plt.figure(figsize=(8, 6))
         sc.pl.umap(adata_imputed, color='leiden', show=False)
-        plt.savefig("/workspace/scBFP/visualization/umap_plot.png", format="png")
+        plt.savefig(f"/workspace/scBFP/visualization/umap_{self.args.name}.png", format="png")
         plt.close()
-        print("UMAP plot saved as 'umap_plot.png'.")
+        print(f"UMAP plot saved as 'umap_{self.args.name}.png'.")
 
         print(f" ==================== Dataset: {self.args.name} ==================== ")
         if self.args.drop_rate != 0.0:
@@ -88,6 +89,4 @@ class embedder:
         if self.args.eval_clustering:
             print("Imputed --> MAE : {} / RMSE : {} / PCC : {} / ARI : {} / NMI : {} / PURITY : {}\n".format(MAE, RMSE, PCC, ari, nmi, purity))
 
-
-            
 

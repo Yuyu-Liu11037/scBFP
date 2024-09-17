@@ -57,8 +57,7 @@ class scBFP_Trainer(embedder):
         # self.adata.obsm['imputation'] = denoised_matrix
         # self.adata.write_h5ad(f'./dataset/{self.args.name}.h5ad')
 
-        if self.args.name == "citeseq":
-            return self.evaluate_citeseq()
+        return self.evaluate()
 
 
 
