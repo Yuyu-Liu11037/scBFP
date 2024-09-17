@@ -9,14 +9,20 @@ The official source code for [**Single-cell RNA-seq data imputation using Bi-lev
 
 ## Environment
 ```
-conda env create -f environment.yml
+conda create -n scBFP python=3.10
+source activate scBFP
+conda install pytorch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 pytorch-cuda=12.1 -c pytorch -c nvidia
+conda install pytorch-sparse -c pyg
+pip install munkres anndata scanpy leidenalg
 ```
 
 ## Download data
 ```
 mkdir dataset
+cd dataset
 pip install gdown
 gdown https://drive.google.com/uc?id=1raqlykXvm5wHjam1Up0SHYT-7gq7coz4
+gdown https://drive.google.com/uc?id=1pilLsl2N1HX_US_Y6X6eAwmXaPso_1Mu
 ```
 
 ## Hyperparameters

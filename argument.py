@@ -8,7 +8,7 @@ def str2bool(s):
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--name', type=str, default='baron_mouse')
+    parser.add_argument('--name', type=str, default='citeseq', choices=['citeseq', 'multiome', 'pbmc', 'mimiciii'])
     parser.add_argument('--cell_type_label', type=str, default='cell_type')
     parser.add_argument('--missing_feature_type', type=str, default='GEX')
     parser.add_argument('--eval_clustering', type=str2bool, default=True)   

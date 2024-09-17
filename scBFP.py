@@ -7,55 +7,58 @@ from embedder import embedder
 from tqdm import tqdm
 from misc.graph_construction import construct_knn_graph
 
+
 class scBFP_Trainer(embedder):
     def __init__(self, args):
         embedder.__init__(self, args)
         self.args = args
 
     def train(self):
-        cell_data = torch.Tensor(self.adata.obsm["missing"].toarray())
-        gene_data = cell_data.t()
+        # cell_data = torch.Tensor(self.adata.obsm["missing"].toarray())
+        # gene_data = cell_data.t()
 
-        self.model = FeaturePropagation()
-        self.model = self.model.to(self.device)
-        st = time.time()
+        # self.model = FeaturePropagation()
+        # self.model = self.model.to(self.device)
+        # st = time.time()
 
-        # Graph Construction
-        print('Start Construct adjacency')
-        adj = construct_knn_graph(gene_data, self.args.gene_k, gcn_norm=True, sym=True, knnfast=self.args.knnfast, fast_batch=self.args.fb)
-        adj = adj.to(self.device)
+        # # Graph Construction
+        # print('Start Construct adjacency')
+        # adj = construct_knn_graph(gene_data, self.args.gene_k, gcn_norm=True, sym=True, knnfast=self.args.knnfast, fast_batch=self.args.fb)
+        # adj = adj.to(self.device)
 
-        print(f"Graph Contruction Time : {(time.time() - st):.2f}")
-        pt = time.time()
+        # print(f"Graph Contruction Time : {(time.time() - st):.2f}")
+        # pt = time.time()
 
-        # Gene-wise Feature Propagation
-        print('Start Gene-wise Feature Propagation ...!')
-        gene_denoised_matrix = self.model(gene_data, adj, iter=self.args.gene_iter, mask=True)
+        # # Gene-wise Feature Propagation
+        # print('Start Gene-wise Feature Propagation ...!')
+        # gene_denoised_matrix = self.model(gene_data, adj, iter=self.args.gene_iter, mask=True)
 
-        print(f"Hard FP Time : {(time.time() - pt):.2f}")
-        pt = time.time()
+        # print(f"Hard FP Time : {(time.time() - pt):.2f}")
+        # pt = time.time()
 
-        # Graph Refinement
-        print('Construct new adjacency')
-        denoised_matrix = gene_denoised_matrix.t()
-        adj = construct_knn_graph(denoised_matrix, self.args.cell_k, gcn_norm=False, sym=True, knnfast=self.args.knnfast, fast_batch=self.args.fb)
+        # # Graph Refinement
+        # print('Construct new adjacency')
+        # denoised_matrix = gene_denoised_matrix.t()
+        # adj = construct_knn_graph(denoised_matrix, self.args.cell_k, gcn_norm=False, sym=True, knnfast=self.args.knnfast, fast_batch=self.args.fb)
 
-        print(f"Graph Refinement Time : {(time.time() - pt):.2f}")
-        pt = time.time()
+        # print(f"Graph Refinement Time : {(time.time() - pt):.2f}")
+        # pt = time.time()
 
-        # Cell-wise Feature Propagation
-        print('Start Final Cell-wise Feature Propagation ...!')
-        denoised_matrix = self.model(denoised_matrix, adj, iter=self.args.cell_iter, mask=False)
+        # # Cell-wise Feature Propagation
+        # print('Start Final Cell-wise Feature Propagation ...!')
+        # denoised_matrix = self.model(denoised_matrix, adj, iter=self.args.cell_iter, mask=False)
 
-        print(f"Soft FP Time : {(time.time() - pt):.2f}")
-        et = time.time()
+        # print(f"Soft FP Time : {(time.time() - pt):.2f}")
+        # et = time.time()
 
-        print(f'Total Runing Time : {(et - st):.2f}')
-        denoised_matrix = denoised_matrix.detach().cpu().numpy()
+        # print(f'Total Runing Time : {(et - st):.2f}')
+        # denoised_matrix = denoised_matrix.detach().cpu().numpy()
         
-        self.adata.obsm['imputation'] = denoised_matrix
-        self.adata.write_h5ad(f'./dataset/{self.args.name}.h5ad')
-        return self.evaluate()
+        # self.adata.obsm['imputation'] = denoised_matrix
+        # self.adata.write_h5ad(f'./dataset/{self.args.name}.h5ad')
+
+        if self.args.name == "citeseq":
+            return self.evaluate_citeseq()
 
 
 
